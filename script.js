@@ -88,7 +88,7 @@ let isListView = false;
 let showFavoritesOnly = false;
 
 function getFavorites() {
-  return JSON.parse(localStorage.getItem("favorites"));
+  return JSON.parse(localStorage.getItem("favorites")) || [];
 }
 
 function toggleFavorite(id) {
@@ -111,13 +111,7 @@ function renderProducts() {
     : products;
 
   filtered.forEach((product) => {
-    let isFavorited;
-    if(favorites)
-    {
-      isFavorited = favorites.includes(product.id);
-    }else{
-      isFavorited = false;
-    }
+    const isFavorited = favorites.includes(product.id);
     const cardCols = isListView ? "col-12" : "col-lg-3 col-md-6 col-sm-12";
     let priceValue = parseFloat(product.price.replace("$", ""));
     let discountValue = product.discount
