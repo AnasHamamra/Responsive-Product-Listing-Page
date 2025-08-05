@@ -106,13 +106,20 @@ function renderProducts() {
   container.empty();
 
   let favorites = getFavorites();
+  const viewFav = document.getElementById("viewFavorites");
+  if (favorites.length === 0) {
+    viewFav.hidden = true;
+  }else {
+    viewFav.hidden = false;
+  }
+  
   let filtered = showFavoritesOnly
     ? products.filter((p) => favorites.includes(p.id))
     : products;
 
   filtered.forEach((product) => {
     const isFavorited = favorites.includes(product.id);
-    const cardCols = isListView ? "col-12" : "col-lg-3 col-md-6 col-sm-12";
+    const cardCols = isListView ? "col-12" : "col-xxl-3 col-lg-4 col-md-6 col-sm-6";
     let priceValue = parseFloat(product.price.replace("$", ""));
     let discountValue = product.discount
       ? parseFloat(product.discount.replace("%", ""))
@@ -128,6 +135,7 @@ function renderProducts() {
       : `<p class="card-text text-muted">${product.price}</p>`;
 
     const productImage = `
+    <div class="image-wrapper">
         <div class="position-relative">
           <img src="${product.image}" class="card-img-top img-fluid" alt="${
       product.title
@@ -137,6 +145,7 @@ function renderProducts() {
               ? `<span class="badge bg-danger position-absolute top-0 start-0 m-2">${product.discount} OFF</span>`
               : ""
           }
+        </div>
         </div>
       `;
 
