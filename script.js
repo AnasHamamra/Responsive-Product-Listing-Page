@@ -102,6 +102,12 @@ function toggleFavorite(id) {
 }
 
 function renderProducts() {
+  document.querySelector("#toggleView i").className = isListView 
+    ? "fa-solid fa-grip" 
+    : "fa-solid fa-list";
+    document.querySelector("#viewFavorites i").className = showFavoritesOnly 
+    ? "fa-solid fa-reply-all" 
+    : "fa-duotone fa-solid fa-heart";
   const container = $("#productContainer");
   container.empty();
 
@@ -148,9 +154,8 @@ function renderProducts() {
         </div>
         </div>
       `;
-
+    
     let cardContent;
-
     if (isListView) {
       cardContent = `
           <div class="${cardCols}">
@@ -203,7 +208,6 @@ function renderProducts() {
           </div>
         `;
     }
-
     container.append(cardContent);
   });
 }
@@ -214,6 +218,10 @@ $(document).ready(function () {
   $(document).on("click", ".favorite-icon", function () {
     const id = parseInt($(this).data("id"));
     toggleFavorite(id);
+    let favorites = getFavorites();
+    if (showFavoritesOnly === true && favorites.length === 0) {
+     showFavoritesOnly = false;
+    }
     renderProducts();
   });
 
@@ -224,7 +232,7 @@ $(document).ready(function () {
 
   $("#viewFavorites").on("click", function () {
     showFavoritesOnly = !showFavoritesOnly;
-    $(this).text(showFavoritesOnly ? "🔁 Show All" : "Favorites Only");
+    
     renderProducts();
   });
 });
