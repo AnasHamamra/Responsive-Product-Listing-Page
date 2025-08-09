@@ -86,6 +86,7 @@ const products = [
 
 let isListView = false;
 let showFavoritesOnly = false;
+let selectedCategory = null;
 
 function getFavorites() {
   return JSON.parse(localStorage.getItem("favorites")) || [];
@@ -102,11 +103,11 @@ function toggleFavorite(id) {
 }
 
 function renderProducts() {
-  document.querySelector("#toggleView i").className = isListView 
-    ? "fa-solid fa-grip" 
+  document.querySelector("#toggleView i").className = isListView
+    ? "fa-solid fa-grip"
     : "fa-solid fa-list";
-    document.querySelector("#viewFavorites i").className = showFavoritesOnly 
-    ? "fa-solid fa-reply-all" 
+  document.querySelector("#viewFavorites i").className = showFavoritesOnly
+    ? "fa-solid fa-reply-all"
     : "fa-duotone fa-solid fa-heart";
   const container = $("#productContainer");
   container.empty();
@@ -115,17 +116,27 @@ function renderProducts() {
   const viewFav = document.getElementById("viewFavorites");
   if (favorites.length === 0) {
     viewFav.hidden = true;
-  }else {
+  } else {
     viewFav.hidden = false;
   }
-  
+
   let filtered = showFavoritesOnly
     ? products.filter((p) => favorites.includes(p.id))
     : products;
 
+  if (selectedCategory && selectedCategory !== "Discounts") {
+    filtered = filtered.filter((p) => p.category === selectedCategory);
+  }
+
+  if (selectedCategory === "Discounts") {
+    filtered = filtered.filter((p) => p.discount);
+  }
+
   filtered.forEach((product) => {
     const isFavorited = favorites.includes(product.id);
-    const cardCols = isListView ? "col-12" : "col-xxl-3 col-lg-4 col-md-6 col-sm-6";
+    const cardCols = isListView
+      ? "col-12"
+      : "col-xxl-3 col-lg-4 col-md-6 col-sm-6";
     let priceValue = parseFloat(product.price.replace("$", ""));
     let discountValue = product.discount
       ? parseFloat(product.discount.replace("%", ""))
@@ -154,7 +165,7 @@ function renderProducts() {
         </div>
         </div>
       `;
-    
+
     let cardContent;
     if (isListView) {
       cardContent = `
@@ -213,6 +224,21 @@ function renderProducts() {
 }
 
 $(document).ready(function () {
+  $(".category-link").on("click", function (e) {
+    e.preventDefault();
+    const category = $(this).data("category");
+    $(".category-link").removeClass("active");
+    $(this).addClass("active");
+    showFavoritesOnly = false;
+    if (category === "All") {
+      selectedCategory = null;
+    } else {
+      selectedCategory = category;
+    }
+
+    renderProducts();
+  });
+
   renderProducts();
 
   $(document).on("click", ".favorite-icon", function () {
@@ -220,7 +246,7 @@ $(document).ready(function () {
     toggleFavorite(id);
     let favorites = getFavorites();
     if (showFavoritesOnly === true && favorites.length === 0) {
-     showFavoritesOnly = false;
+      showFavoritesOnly = false;
     }
     renderProducts();
   });
@@ -232,7 +258,7 @@ $(document).ready(function () {
 
   $("#viewFavorites").on("click", function () {
     showFavoritesOnly = !showFavoritesOnly;
-    
+
     renderProducts();
   });
 });

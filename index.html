@@ -15,15 +15,41 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">MyBrand</a>
+    
+        <button class="navbar-toggler hovered" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link category-link" data-category="All" href="#">All</a></li>
+            <li class="nav-item"><a class="nav-link category-link" data-category="Electronics" href="#">Electronics</a></li>
+            <li class="nav-item"><a class="nav-link category-link" data-category="Clothing" href="#">Clothing</a></li>
+            <li class="nav-item"><a class="nav-link category-link" data-category="Accessories" href="#">Accessories</a></li>
+            <li class="nav-item"><a class="nav-link category-link" data-category="Discounts" href="#">Discounts</a></li>
+          </ul>
+          
+          <div class="d-flex align-items-center gap-3">
+            <a href="#" class="text-dark"><i class="fa-solid fa-magnifying-glass hovered"></i></a>
+            <a href="#" id="viewFavorites" class="text-dark">
+              <i class="fa-duotone fa-heart hovered"></i>
+            </a>
+            <a href="#" class="text-dark"><i class="fa-solid fa-user hovered"></i></a>
+            <a href="#" class="text-dark"><i class="fa-solid fa-cart-shopping hovered"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
     <div class="container my-4">
       <div class="d-flex flex-wrap justify-content-between align-items-start align-items-md-center gap-3 mb-4">
         <h2 class="m-0 flex-grow-1">Product Listing</h2>
         <div class="d-flex  flex-row flex-wrap gap-2">
           <button id="toggleView" class="btn btn-outline-secondary me-2">
             <i class="fa-solid fa-list"></i>
-          </button>
-          <button id="viewFavorites" class="btn btn-outline-danger">
-            <i class="fa-duotone fa-solid fa-heart"></i>
           </button>
         </div>
       </div>

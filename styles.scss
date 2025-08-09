@@ -6,6 +6,56 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
+
+.navbar {
+  &:hover{
+    transition-duration: 1s;
+  background-color: black !important;
+  .nav-link {
+    color: white;
+    &:hover {
+      color: #555;
+    }
+  }
+  .navbar-brand {
+    color: white;
+  }
+  .hovered , .fa-heart , .fa-reply-all , .navbar-toggler-icon{
+    color: white !important;
+  }
+  }
+  padding: 16px;
+  position: sticky;
+  .navbar-brand {
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+
+    &:hover {
+      color: #555;
+    }
+  }
+
+  .fa-magnifying-glass, .fa-bag-shopping {
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+ .hovered:hover{
+  color: #555 !important;
+ } 
+ .fa-heart:hover{
+  color: #555 !important;
+ } 
+ .fa-reply-all:hover{
+  color: #555 !important;
+ } 
+}
+
 .card {
   height: 100%;
   display: flex;
