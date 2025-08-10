@@ -120,6 +120,12 @@ function renderProducts() {
     viewFav.hidden = false;
   }
 
+  const viewFav1 = document.getElementById("viewFavorites1");
+  if (favorites.length === 0) {
+    viewFav1.hidden = true;
+  } else {
+    viewFav1.hidden = false;
+  }
   let filtered = showFavoritesOnly
     ? products.filter((p) => favorites.includes(p.id))
     : products;
@@ -238,7 +244,21 @@ $(document).ready(function () {
 
     renderProducts();
   });
-
+  $(window).on('load resize', function () {
+    const offcanvasElement = document.getElementById('mainNavbar');
+    const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+  
+    if (window.innerWidth >= 990 && offcanvasElement.classList.contains('show')) {
+      if (offcanvasInstance) {
+        offcanvasInstance.hide();
+      } else {
+        const newInstance = new bootstrap.Offcanvas(offcanvasElement);
+        newInstance.hide();
+      }
+    }
+  });
+  
+  
   renderProducts();
 
   $(document).on("click", ".favorite-icon", function () {
@@ -258,7 +278,10 @@ $(document).ready(function () {
 
   $("#viewFavorites").on("click", function () {
     showFavoritesOnly = !showFavoritesOnly;
-
+    renderProducts();
+  });
+  $("#viewFavorites1").on("click", function () {
+    showFavoritesOnly = !showFavoritesOnly;
     renderProducts();
   });
 });

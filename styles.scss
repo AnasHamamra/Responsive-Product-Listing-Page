@@ -6,11 +6,14 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
+.white{
+  color: white !important;
+}
 
 .navbar {
   &:hover{
     transition-duration: 1s;
-  background-color: black !important;
+  background-color: $secondary-color !important;
   .nav-link {
     color: white;
     &:hover {
@@ -30,14 +33,20 @@ body {
     font-size: 1.25rem;
     letter-spacing: 1px;
   }
-
+  .navbar-toggler {
+    font-size: 1.2rem;
+  }
+  
+  .offcanvas {
+    width: 250px;
+  }
   .nav-link {
     font-size: 14px;
     text-transform: uppercase;
     padding: 0.75rem 1rem;
 
     &:hover {
-      color: #555;
+      color: #555 !important;
     }
   }
 

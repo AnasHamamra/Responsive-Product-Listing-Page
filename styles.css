@@ -3,6 +3,10 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
+.white {
+  color: white !important;
+}
+
 .navbar {
   padding: 16px;
   position: -webkit-sticky;
@@ -36,6 +40,14 @@ body {
   letter-spacing: 1px;
 }
 
+.navbar .navbar-toggler {
+  font-size: 1.2rem;
+}
+
+.navbar .offcanvas {
+  width: 250px;
+}
+
 .navbar .nav-link {
   font-size: 14px;
   text-transform: uppercase;
@@ -43,7 +55,7 @@ body {
 }
 
 .navbar .nav-link:hover {
-  color: #555;
+  color: #555 !important;
 }
 
 .navbar .fa-magnifying-glass, .navbar .fa-bag-shopping {
