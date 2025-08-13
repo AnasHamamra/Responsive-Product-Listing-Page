@@ -15,78 +15,74 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-light bg-white shadow-sm sticky-top">
+    <!-- Skip Link -->
+    <a href="#productContainer" class="visually-hidden-focusable">Skip to main content</a>
+
+    <nav class="navbar navbar-light bg-white shadow-sm sticky-top" role="navigation" aria-label="Main navigation">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="#" onclick="location.reload()">MyBrand</a>
+        <a class="navbar-brand fw-bold" href="#" onclick="location.reload()" aria-label="Go to homepage">MyBrand</a>
     
         <div class="d-flex align-items-center gap-3 order-lg-3">
-          <a href="#" class="text-dark"><i class="fa-solid fa-magnifying-glass hovered"></i></a>
-          <a href="#" id="viewFavorites" class="text-dark"><i class="fa-duotone fa-heart hovered"></i></a>
-          <a href="#" class="text-dark"><i class="fa-solid fa-user hovered"></i></a>
-          <a href="#" class="text-dark"><i class="fa-solid fa-cart-shopping hovered"></i></a>
+          <a href="#" class="text-dark" aria-label="Search"><i class="fa-solid fa-magnifying-glass hovered"></i></a>
+          <button id="viewFavorites" class="btn btn-link text-dark p-0" aria-label="View favorites"><i class="fa-duotone fa-heart hovered"></i></button>
+          <a href="#" class="text-dark" aria-label="User account"><i class="fa-solid fa-user hovered"></i></a>
+          <a href="#" class="text-dark" aria-label="Shopping cart"><i class="fa-solid fa-cart-shopping hovered"></i></a>
         </div>
     
-    
-        <button class="navbar-toggler border-0 d-lg-none order-lg-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavbar">
+        <button class="navbar-toggler border-0 d-lg-none order-lg-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavbar" aria-label="Open menu">
           <i class="fa-solid fa-bars hovered"></i>
         </button>
     
-
         <ul class="navbar-nav flex-row gap-3 d-none d-lg-flex order-lg-1">
-          <li class="nav-item"><a class="nav-link category-link" data-category="All" href="#">All</a></li>
-          <li class="nav-item"><a class="nav-link category-link" data-category="Electronics" href="#">Electronics</a></li>
-          <li class="nav-item"><a class="nav-link category-link" data-category="Clothing" href="#">Clothing</a></li>
-          <li class="nav-item"><a class="nav-link category-link" data-category="Accessories" href="#">Accessories</a></li>
-          <li class="nav-item"><a class="nav-link category-link" data-category="Discounts" href="#">Discounts</a></li>
+          <li class="nav-item"><a class="nav-link category-link" data-category="All" href="#" aria-label="View All">All</a></li>
+          <li class="nav-item"><a class="nav-link category-link" data-category="Electronics" href="#" aria-label="View Electronics">Electronics</a></li>
+          <li class="nav-item"><a class="nav-link category-link" data-category="Clothing" href="#" aria-label="View Clothing">Clothing</a></li>
+          <li class="nav-item"><a class="nav-link category-link" data-category="Accessories" href="#" aria-label="View Accessories">Accessories</a></li>
+          <li class="nav-item"><a class="nav-link category-link" data-category="Discounts" href="#" aria-label="View Discounts">Discounts</a></li>
         </ul>
     
-
-<div class="offcanvas offcanvas-end w-100 bg-black" tabindex="-1" id="mainNavbar">
-  <div class="offcanvas-header justify-content-between">
-   
-    <a class="navbar-brand fw-bold white" href="#" onclick="location.reload()">MyBrand</a>
-    <div class="d-flex align-items-center gap-3 order-lg-3 m-auto">
-      <a href="#" class="text-dark"><i class="fa-solid fa-magnifying-glass hovered white"></i></a>
-      <a href="#" class="text-dark"><i class="fa-solid fa-cart-shopping hovered white"></i></a>
-    </div>
-    <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas"></button>
-  </div>
-
-  <div class="offcanvas-body d-flex flex-column">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a href="#" class="nav-link category-link fs-4 white">Sign In / Register</a></li>
-      <br>
-      <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="All" href="#">All</a></li>
-      <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Electronics" href="#">Electronics</a></li>
-      <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Clothing" href="#">Clothing</a></li>
-      <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Accessories" href="#">Accessories</a></li>
-      <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Discounts" href="#">Discounts</a></li>
-      <br>
-      <li class="nav-item"><a href="#" id="viewFavorites1" class="nav-link category-link fs-4 white">Favorites</a></li>
-    </ul>
+        <div class="offcanvas offcanvas-end w-100 bg-black" tabindex="-1" id="mainNavbar" role="dialog" aria-labelledby="mainMenu">
+          <div class="offcanvas-header justify-content-between">
+            <a class="navbar-brand fw-bold white" href="#" onclick="location.reload()">MyBrand</a>
+            <div class="d-flex align-items-center gap-3 order-lg-3 m-auto">
+              <a href="#" class="text-dark" aria-label="Search"><i class="fa-solid fa-magnifying-glass hovered white"></i></a>
+              <a href="#" class="text-dark" aria-label="Shopping cart"><i class="fa-solid fa-cart-shopping hovered white"></i></a>
+            </div>
+            <button type="button" class="btn-close bg-white" data-bs-dismiss="offcanvas" aria-label="Close menu"></button>
+          </div>
     
-  </div>
-</div>
-
+          <div class="offcanvas-body d-flex flex-column">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a href="#" class="nav-link category-link fs-4 white">Sign In / Register</a></li>
+              <br>
+              <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="All" href="#" aria-label="View All">All</a></li>
+              <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Electronics" href="#" aria-label="View Electronics">Electronics</a></li>
+              <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Clothing" href="#" aria-label="View Clothing">Clothing</a></li>
+              <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Accessories" href="#" aria-label="View Accessories">Accessories</a></li>
+              <li class="nav-item"><a class="nav-link category-link fs-4 white" data-category="Discounts" href="#" aria-label="View Discounts">Discounts</a></li>
+              <br>
+              <li class="nav-item"><a id="viewFavorites1" class="nav-link category-link fs-4 white" aria-label="View Favorites" href="#">Favorites</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </nav>
     
-    
-    
-    <div class="container my-4">
+    <main class="container my-4">
       <div class="d-flex flex-wrap justify-content-between align-items-start align-items-md-center gap-3 mb-4">
-        <h2 class="m-0 flex-grow-1">Product Listing</h2>
-        <div class="d-flex  flex-row flex-wrap gap-2">
-          <button id="toggleView" class="btn btn-outline-secondary me-2">
+        <h2 class="m-0 flex-grow-1" id="productListing">Product Listing</h2>
+        <div class="d-flex flex-row flex-wrap gap-2">
+          <button id="toggleView" class="btn btn-outline-secondary me-2" aria-label="Toggle view mode">
             <i class="fa-solid fa-list"></i>
           </button>
         </div>
       </div>
 
-      <div id="productContainer" class="row gy-4"></div>
-    </div>
+      <!-- Live region for updates -->
+      <div id="liveRegion" aria-live="polite" class="visually-hidden"></div>
 
-    
+      <div id="productContainer" class="row gy-4" role="region" aria-labelledby="productListing"></div>
+    </main>
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

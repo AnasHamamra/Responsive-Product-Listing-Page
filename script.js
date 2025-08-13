@@ -109,23 +109,21 @@ function renderProducts() {
   document.querySelector("#viewFavorites i").className = showFavoritesOnly
     ? "fa-solid fa-reply-all"
     : "fa-duotone fa-solid fa-heart";
+
+  document.querySelector("#toggleView").setAttribute("aria-label", isListView ? "Switch to grid view" : "Switch to list view");
+  document.querySelector("#viewFavorites").setAttribute("aria-label", showFavoritesOnly ? "Show all products" : "Show favorite products");
+  document.querySelector("#viewFavorites1").setAttribute("aria-label", showFavoritesOnly ? "Show all products" : "Show favorite products");
+
   const container = $("#productContainer");
   container.empty();
 
   let favorites = getFavorites();
   const viewFav = document.getElementById("viewFavorites");
-  if (favorites.length === 0) {
-    viewFav.hidden = true;
-  } else {
-    viewFav.hidden = false;
-  }
+  viewFav.hidden = favorites.length === 0;
 
   const viewFav1 = document.getElementById("viewFavorites1");
-  if (favorites.length === 0) {
-    viewFav1.hidden = true;
-  } else {
-    viewFav1.hidden = false;
-  }
+  viewFav1.hidden = favorites.length === 0;
+
   let filtered = showFavoritesOnly
     ? products.filter((p) => favorites.includes(p.id))
     : products;
@@ -143,6 +141,7 @@ function renderProducts() {
     const cardCols = isListView
       ? "col-12"
       : "col-xxl-3 col-lg-4 col-md-6 col-sm-6";
+
     let priceValue = parseFloat(product.price.replace("$", ""));
     let discountValue = product.discount
       ? parseFloat(product.discount.replace("%", ""))
@@ -150,83 +149,86 @@ function renderProducts() {
     let finalPrice = discountValue
       ? (priceValue - (priceValue * discountValue) / 100).toFixed(2)
       : priceValue;
+
     let priceHTML = discountValue
       ? `<p class="card-text">
-       <span class="text-muted text-decoration-line-through me-2">${product.price}</span>
-       <span class="text-danger fw-bold">$${finalPrice}</span>
-     </p>`
+           <span class="text-muted text-decoration-line-through me-2">${product.price}</span>
+           <span class="text-danger fw-bold">$${finalPrice}</span>
+         </p>`
       : `<p class="card-text text-muted">${product.price}</p>`;
 
     const productImage = `
-    <div class="image-wrapper">
+      <div class="image-wrapper">
         <div class="position-relative">
-          <img src="${product.image}" class="card-img-top img-fluid" alt="${
-      product.title
-    }">
+          <img src="${product.image}" 
+               class="card-img-top img-fluid" 
+               alt="${product.title} - ${product.description}">
           ${
             product.discount
               ? `<span class="badge bg-danger position-absolute top-0 start-0 m-2">${product.discount} OFF</span>`
               : ""
           }
         </div>
-        </div>
-      `;
+      </div>
+    `;
+
+    const favoriteBtn = `
+      <span class="favorite-icon ${isFavorited ? "favorited" : "notFavorited"}" 
+            data-id="${product.id}" 
+            role="button" 
+            tabindex="0" 
+            aria-pressed="${isFavorited}" 
+            aria-label="${isFavorited ? "Remove " : "Add "} ${product.title} to favorites">
+        <i class="fa-solid fa-heart"></i>
+      </span>
+    `;
 
     let cardContent;
     if (isListView) {
       cardContent = `
-          <div class="${cardCols}">
-            <div class="card p-2">
-              <div class="row g-0 align-items-center">
-                <div class="col-sm-12 col-md-4">
-                  ${productImage}
-                </div>
-                <div class="col-12 col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title d-flex justify-content-between align-items-center">
-                      ${product.title}
-                      <span class="favorite-icon ${
-                        isFavorited ? "favorited" : "notFavorited"
-                      }" data-id="${product.id}">
-                        <i class="fa-solid fa-heart"></i>
-                      </span>
-                    </h5>
-                    ${priceHTML}
-                    <span class="badge bg-primary category-badge">${
-                      product.category
-                    }</span>
-                    <p class="mt-2">${product.description}</p>
-                  </div>
+        <div class="${cardCols}">
+          <div class="card p-2">
+            <div class="row g-0 align-items-center">
+              <div class="col-sm-12 col-md-4">
+                ${productImage}
+              </div>
+              <div class="col-12 col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title d-flex justify-content-between align-items-center">
+                    ${product.title}
+                    ${favoriteBtn}
+                  </h5>
+                  ${priceHTML}
+                  <span class="badge bg-primary category-badge">${product.category}</span>
+                  <p class="mt-2">${product.description}</p>
                 </div>
               </div>
             </div>
           </div>
-        `;
+        </div>
+      `;
     } else {
       cardContent = `
-          <div class="${cardCols}">
-            <div class="card">
-              ${productImage}
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  ${product.title}
-                  <span class="favorite-icon ${
-                    isFavorited ? "favorited" : "notFavorited"
-                  }" data-id="${product.id}">
-                    <i class="fa-solid fa-heart"></i>
-                  </span>
-                </h5>
-                ${priceHTML}
-                <span class="badge bg-primary category-badge">${
-                  product.category
-                }</span>
-              </div>
+        <div class="${cardCols}">
+          <div class="card">
+            ${productImage}
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                ${product.title}
+                ${favoriteBtn}
+              </h5>
+              ${priceHTML}
+              <span class="badge bg-primary category-badge">${product.category}</span>
             </div>
           </div>
-        `;
+        </div>
+      `;
     }
     container.append(cardContent);
   });
+  if (!document.getElementById("liveRegion")) {
+    $("body").append('<div id="liveRegion" class="visually-hidden" aria-live="polite"></div>');
+  }
 }
 
 $(document).ready(function () {
@@ -236,39 +238,35 @@ $(document).ready(function () {
     $(".category-link").removeClass("active");
     $(this).addClass("active");
     showFavoritesOnly = false;
-    if (category === "All") {
-      selectedCategory = null;
-    } else {
-      selectedCategory = category;
-    }
-
+    selectedCategory = category === "All" ? null : category;
     renderProducts();
   });
+
   $(window).on('load resize', function () {
     const offcanvasElement = document.getElementById('mainNavbar');
     const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
-  
     if (window.innerWidth >= 990 && offcanvasElement.classList.contains('show')) {
       if (offcanvasInstance) {
         offcanvasInstance.hide();
       } else {
-        const newInstance = new bootstrap.Offcanvas(offcanvasElement);
-        newInstance.hide();
+        new bootstrap.Offcanvas(offcanvasElement).hide();
       }
     }
   });
-  
-  
+
   renderProducts();
 
-  $(document).on("click", ".favorite-icon", function () {
-    const id = parseInt($(this).data("id"));
-    toggleFavorite(id);
-    let favorites = getFavorites();
-    if (showFavoritesOnly === true && favorites.length === 0) {
-      showFavoritesOnly = false;
+  $(document).on("click keypress", ".favorite-icon", function (e) {
+    if (e.type === "click" || (e.type === "keypress" && (e.key === "Enter" || e.key === " "))) {
+      const id = parseInt($(this).data("id"));
+      toggleFavorite(id);
+      let favorites = getFavorites();
+      $("#liveRegion").text(favorites.includes(id) ? "Added to favorites" : "Removed from favorites");
+      if (showFavoritesOnly === true && favorites.length === 0) {
+        showFavoritesOnly = false;
+      }
+      renderProducts();
     }
-    renderProducts();
   });
 
   $("#toggleView").on("click", function () {
@@ -276,11 +274,7 @@ $(document).ready(function () {
     renderProducts();
   });
 
-  $("#viewFavorites").on("click", function () {
-    showFavoritesOnly = !showFavoritesOnly;
-    renderProducts();
-  });
-  $("#viewFavorites1").on("click", function () {
+  $("#viewFavorites, #viewFavorites1").on("click", function () {
     showFavoritesOnly = !showFavoritesOnly;
     renderProducts();
   });
